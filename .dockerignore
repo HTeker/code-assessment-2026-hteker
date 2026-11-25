@@ -1,0 +1,8 @@
+node_modules
+coverage
+.git
+.planning
+test
+*.md
+Dockerfile
+.dockerignore
