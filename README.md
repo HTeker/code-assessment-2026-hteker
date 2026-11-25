@@ -8,7 +8,7 @@ Data is kept in memory and is seeded at startup. It resets every time the server
 
 ## Run it
 
-Requires Node.js 20 or newer.
+Requires Node.js 22.12 or newer (Vitest 5 needs it).
 
 ```bash
 npm install

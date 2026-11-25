@@ -59,9 +59,10 @@ The first part is the two-page answer the assignment asks for. The appendix afte
 I used Claude Code, with the GSD "quick" workflow, as a pair that does the typing while I make the decisions:
 
 1. The AI asked me a long list of multiple-choice questions (about 20) until every grey area in the brief was decided. Those answers are saved as locked decisions.
-2. A planner agent turned the decisions into a written plan.
+2. The decisions were turned into one written plan: the exact API, error codes, file layout and seed data. (A separate planner agent got stuck, so the main Claude session wrote the plan itself.)
 3. An executor agent wrote the code, the tests and the docs in small, separate commits.
-4. I read the result, ran it, and I own every line. I can explain all of it.
+4. The main session then checked the work: ran the tests and the type check, read the code, and compared this file to the code. That review caught one real bug: `engines` said Node 20, but Vitest 5 needs Node 22.12.
+5. I read the result, ran it, and I own every line. I can explain all of it.
 
 The planning files are committed in `.planning/`, so you can see the process.
 
@@ -72,7 +73,7 @@ Format: what I decided, what else I could have done, and why I picked this.
 ## Stack & tooling
 
 ### 1. TypeScript on Node.js
-- **Decision:** TypeScript with strict settings, on Node.js (needs Node 20 or newer; `engines` says so).
+- **Decision:** TypeScript with strict settings, on Node.js (needs Node 22.12 or newer, because Vitest 5 needs it; `engines` says so).
 - **Alternatives:** A, Kotlin. B, plain JavaScript.
 - **Why:** TypeScript was allowed and is quick to write. Types catch mistakes in the rules. Strict mode and `noUncheckedIndexedAccess` stop silent `undefined` bugs.
 
@@ -99,7 +100,7 @@ Format: what I decided, what else I could have done, and why I picked this.
 ### 6. tsx to run the code, no build step
 - **Decision:** `npm start` runs `tsx src/server.ts`. `npm run typecheck` runs `tsc --noEmit`.
 - **Alternatives:** A, compile with `tsc` and run `node dist`. B, Node's built-in type stripping.
-- **Why:** The simplest thing that always works. No `dist` folder, no stale builds. Built-in type stripping needs a recent Node and does not match `engines: >=20`. For a real deployment I would compile to JavaScript.
+- **Why:** The simplest thing that always works. No `dist` folder, no stale builds. Built-in type stripping only works without a flag on newer Node versions, and it has extra rules about imports. tsx just works. For a real deployment I would compile to JavaScript.
 
 ### 7. Vitest
 - **Decision:** Vitest for unit and API tests.
