@@ -1,0 +1,5 @@
+{
+  "mode": "interactive",
+  "planning": { "commit_docs": true },
+  "workflow": { "use_worktrees": false }
+}
