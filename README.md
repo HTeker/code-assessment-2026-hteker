@@ -106,4 +106,4 @@ curl -s -X POST localhost:3000/evenings -H 'Authorization: Bearer teacher-1' -H 
 | `PATCH /bookings/:bookingId` | parent of the child, evening's teacher | move to another slot of the same evening |
 | `DELETE /bookings/:bookingId` | parent of the child, evening's teacher | cancel |
 
-Errors always look like `{ "error": { "code": "SLOT_FULL", "message": "This slot is full" } }`. The full list of codes is in the appendix of [DECISIONS.md](DECISIONS.md).
+Errors always look like `{ "error": { "code": "SLOT_FULL", "message": "This slot is full" } }`. The full list of codes is in [DECISIONS_APPENDIX.md](DECISIONS_APPENDIX.md).
