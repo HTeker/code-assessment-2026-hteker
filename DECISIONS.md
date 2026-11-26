@@ -59,7 +59,7 @@ The first part is the two-page answer the assignment asks for. The appendix afte
 I used Claude Code, with the GSD "quick" workflow, as a pair that does the typing while I make the decisions:
 
 1. The AI asked me a long list of multiple-choice questions (about 20) until every grey area in the brief was decided. Those answers are saved as locked decisions.
-2. The decisions were turned into one written plan: the exact API, error codes, file layout and seed data. (A separate planner agent got stuck, so the main Claude session wrote the plan itself.)
+2. The decisions were turned into one written plan: the exact API, error codes, file layout and seed data.
 3. An executor agent wrote the code, the tests and the docs in small, separate commits.
 4. The main session then checked the work: ran the tests and the type check, read the code, and compared this file to the code. That review caught one real bug: `engines` said Node 20, but Vitest 5 needs Node 22.12.
 5. I read the result, ran it, and I own every line. I can explain all of it.
