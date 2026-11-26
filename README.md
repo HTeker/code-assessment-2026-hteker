@@ -65,15 +65,13 @@ curl -s localhost:3000/evenings -H 'Authorization: Bearer parent-1'
 curl -s localhost:3000/evenings/evening-1/slots -H 'Authorization: Bearer parent-1'
 
 # 3. Anna books slot-1 for Sam
-curl -s -X POST localhost:3000/bookings -H 'Authorization: Bearer parent-1' -H 'content-type: application/json' \
-  -d '{"slotId":"slot-1","childId":"child-1"}'
+curl -s -X POST localhost:3000/bookings -H 'Authorization: Bearer parent-1' -H 'content-type: application/json' -d '{"slotId":"slot-1","childId":"child-1"}'
 
 # 4. Ben (Sam's other parent) sees the booking
 curl -s localhost:3000/bookings -H 'Authorization: Bearer parent-2'
 
 # 5. Ben moves it to slot-2
-curl -s -X PATCH localhost:3000/bookings/booking-1 -H 'Authorization: Bearer parent-2' -H 'content-type: application/json' \
-  -d '{"slotId":"slot-2"}'
+curl -s -X PATCH localhost:3000/bookings/booking-1 -H 'Authorization: Bearer parent-2' -H 'content-type: application/json' -d '{"slotId":"slot-2"}'
 
 # 6. Ms. Jansen sees the overview of the evening
 curl -s localhost:3000/evenings/evening-1/overview -H 'Authorization: Bearer teacher-1'
