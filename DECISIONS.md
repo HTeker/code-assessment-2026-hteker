@@ -62,7 +62,7 @@ I used Claude Code, with the GSD "quick" workflow, as a pair that does the typin
 2. The decisions were turned into one written plan: the exact API, error codes, file layout and seed data.
 3. An executor agent wrote the code, the tests and the docs in small, separate commits.
 4. The main session then checked the work: ran the tests and the type check, read the code, and compared this file to the code. That review caught one real bug: `engines` said Node 20, but Vitest 5 needs Node 22.12.
-5. I read the result, ran it, and I own every line. I can explain all of it.
+5. I read the result, ran it, and I own every line.
 
 The planning files are committed in `.planning/`, so you can see the process.
 
@@ -75,12 +75,12 @@ Format: what I decided, what else I could have done, and why I picked this.
 ### 1. TypeScript on Node.js
 - **Decision:** TypeScript with strict settings, on Node.js (needs Node 22.12 or newer, because Vitest 5 needs it; `engines` says so).
 - **Alternatives:** A, Kotlin. B, plain JavaScript.
-- **Why:** TypeScript was allowed and is quick to write. Types catch mistakes in the rules. Strict mode and `noUncheckedIndexedAccess` stop silent `undefined` bugs.
+- **Why:** TypeScript was allowed and is what I am most proficient in.
 
 ### 2. Fastify
 - **Decision:** Fastify 5 as the web framework.
 - **Alternatives:** A, Express. B, NestJS. C, Hono.
-- **Why:** Request validation with JSON Schema and OpenAPI support come built in or as small plugins. NestJS is too big for four hours and brings dependency injection I would have to explain. Express has no built-in validation.
+- **Why:** Request validation with JSON Schema and OpenAPI support come built in or as small plugins. NestJS is unnecessarily big and brings a ton of boilerplate code. Express has no built-in validation.
 
 ### 3. JSON Schema for request validation
 - **Decision:** Each route has a JSON Schema for its body and params. Fastify checks it before my code runs.
