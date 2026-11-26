@@ -58,8 +58,6 @@ A sample evening is created at startup for `teacher-1`: `evening-1`, 14 days fro
 Start the server (`npm start`), then:
 
 ```bash
-H='content-type: application/json'
-
 # 1. Anna lists the evenings of her children's teachers
 curl -s localhost:3000/evenings -H 'Authorization: Bearer parent-1'
 
@@ -67,14 +65,14 @@ curl -s localhost:3000/evenings -H 'Authorization: Bearer parent-1'
 curl -s localhost:3000/evenings/evening-1/slots -H 'Authorization: Bearer parent-1'
 
 # 3. Anna books slot-1 for Sam
-curl -s -X POST localhost:3000/bookings -H 'Authorization: Bearer parent-1' -H "$H" \
+curl -s -X POST localhost:3000/bookings -H 'Authorization: Bearer parent-1' -H 'content-type: application/json' \
   -d '{"slotId":"slot-1","childId":"child-1"}'
 
 # 4. Ben (Sam's other parent) sees the booking
 curl -s localhost:3000/bookings -H 'Authorization: Bearer parent-2'
 
 # 5. Ben moves it to slot-2
-curl -s -X PATCH localhost:3000/bookings/booking-1 -H 'Authorization: Bearer parent-2' -H "$H" \
+curl -s -X PATCH localhost:3000/bookings/booking-1 -H 'Authorization: Bearer parent-2' -H 'content-type: application/json' \
   -d '{"slotId":"slot-2"}'
 
 # 6. Ms. Jansen sees the overview of the evening
@@ -90,7 +88,7 @@ curl -s -X DELETE localhost:3000/bookings/booking-1 -H 'Authorization: Bearer pa
 Teachers can also create their own evening:
 
 ```bash
-curl -s -X POST localhost:3000/evenings -H 'Authorization: Bearer teacher-1' -H "$H" \
+curl -s -X POST localhost:3000/evenings -H 'Authorization: Bearer teacher-1' -H 'content-type: application/json' \
   -d '{"date":"2027-01-20","startTime":"17:00","endTime":"19:30","slotMinutes":10,"maxBookingsPerSlot":2}'
 ```
 

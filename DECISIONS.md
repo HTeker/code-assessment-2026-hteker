@@ -341,7 +341,7 @@ Format: what I decided, what else I could have done, and why I picked this.
 - **Why:** Standard HTTP meaning.
 
 ### 52. One error shape and code list
-- **Decision:** `{ "error": { "code", "message" } }`. A single error handler. Codes: `UNAUTHORIZED` 401, `FORBIDDEN` 403, `NOT_FOUND` 404, `VALIDATION_ERROR` 400, `INVALID_TIME_RANGE` 400, `EVENING_IN_PAST` 400, `INVALID_MOVE` 400, `EVENING_STARTED` 409, `SLOT_FULL` 409, `CHILD_ALREADY_BOOKED` 409, `SLOT_HAS_BOOKINGS` 409, `CAPACITY_BELOW_BOOKINGS` 409. Also `BAD_REQUEST` 400 (for example broken JSON) and `INTERNAL_ERROR` 500.
+- **Decision:** `{ "error": { "code", "message" } }`. A single error handler. Codes: `UNAUTHORIZED` 401, `FORBIDDEN` 403, `NOT_FOUND` 404, `VALIDATION_ERROR` 400, `INVALID_TIME_RANGE` 400, `EVENING_IN_PAST` 400, `INVALID_MOVE` 400, `EVENING_STARTED` 409, `SLOT_FULL` 409, `CHILD_ALREADY_BOOKED` 409, `SLOT_HAS_BOOKINGS` 409, `CAPACITY_BELOW_BOOKINGS` 409. Also `BAD_REQUEST` 400 (for example broken JSON), `UNSUPPORTED_MEDIA_TYPE` 415 (a body sent without `content-type: application/json`) and `INTERNAL_ERROR` 500.
 - **Alternatives:** Plain messages; RFC 7807 problem+json.
 - **Why:** A stable code is easy for a client to switch on. The message is for humans.
 

@@ -74,6 +74,35 @@ describe("auth", () => {
   });
 });
 
+describe("malformed requests", () => {
+  const post = (body: string, contentType?: string) =>
+    buildApp({ now: () => new Date("2026-12-01T12:00:00") }).inject({
+      method: "POST",
+      url: "/bookings",
+      body,
+      headers: {
+        authorization: "Bearer parent-1",
+        ...(contentType ? { "content-type": contentType } : {}),
+      },
+    });
+
+  it("returns 400 BAD_REQUEST for broken JSON", async () => {
+    const res = await post("{not json", "application/json");
+    expect(res.statusCode).toBe(400);
+    expect(errorCode(res)).toBe("BAD_REQUEST");
+  });
+
+  // This is what curl sends when you forget -H 'content-type: application/json'.
+  it("returns 415 UNSUPPORTED_MEDIA_TYPE for a form-encoded body", async () => {
+    const res = await post(
+      '{"slotId":"slot-1","childId":"child-1"}',
+      "application/x-www-form-urlencoded",
+    );
+    expect(res.statusCode).toBe(415);
+    expect(errorCode(res)).toBe("UNSUPPORTED_MEDIA_TYPE");
+  });
+});
+
 describe("creating evenings (requirements 1 and 2)", () => {
   it("is forbidden for parents", async () => {
     const { call } = setup();

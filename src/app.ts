@@ -22,8 +22,11 @@ export function buildApp({ now = () => new Date() }: { now?: () => Date } = {}) 
   app.setErrorHandler((error: FastifyError, request, reply) => {
     if (error instanceof AppError) return sendError(reply, error.status, error.code, error.message);
     if (error.validation) return sendError(reply, 400, "VALIDATION_ERROR", error.message);
+    // Other client errors Fastify finds itself, e.g. broken JSON (400) or a body without
+    // "content-type: application/json" (415).
     if (error.statusCode && error.statusCode < 500) {
-      return sendError(reply, error.statusCode, "BAD_REQUEST", error.message);
+      const code = error.statusCode === 415 ? "UNSUPPORTED_MEDIA_TYPE" : "BAD_REQUEST";
+      return sendError(reply, error.statusCode, code, error.message);
     }
     request.log.error(error);
     return sendError(reply, 500, "INTERNAL_ERROR", "Something went wrong");
